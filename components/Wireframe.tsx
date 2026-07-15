@@ -54,7 +54,7 @@ export default function Wireframe() {
             ctx.lineJoin = "round";
 
             for (const loop of edges) {
-                ctx.strokeStyle = loop[0] >= 8 ? faint : strong;
+                ctx.strokeStyle = "#4b4f52";
                 ctx.beginPath();
                 if (loop.length === 2) {
                     const a = place(vertices[loop[0]], angle);
