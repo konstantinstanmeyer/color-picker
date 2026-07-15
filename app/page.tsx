@@ -13,6 +13,7 @@ import {
   buildSteps,
   trace,
 } from "../lib/color";
+import Wireframe from "@/components/Wireframe";
 
 function useTheme() {
   const [theme, setTheme] = useState<"light" | "dark">("light");
@@ -434,6 +435,7 @@ function Claim() {
             Same input, same output, every time — and it shows you its own error.
           </p>
         </div>
+        <Wireframe />
       </div>
     </div>
   );

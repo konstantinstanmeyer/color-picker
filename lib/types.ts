@@ -23,3 +23,5 @@ export type Mode = "flatten" | "preserve";
 
 // One filter function plus a human label, for display in the pipeline view
 export type Step = { fn: string; label: string };
+
+export type V3 = { x: number; y: number; z: number };
