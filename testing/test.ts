@@ -18,3 +18,23 @@ function mulMatrix(M: Mat3, v: Vec3): Vec3{
         M[2][0] * v[0] + M[2][1] * v[1] + M[2][2] * v[2],
     ]
 };
+
+// luminance vector, browsers have different brightness perception per-color to be accounted for
+const LUM: Vec3 = [0.213, 0.715, 0.072];
+const L: Mat3 = [LUM, LUM, LUM];
+
+const ONE: Vec3 = [1, 1, 1]; // vector of ones for full-color intensity inversions
+const I3: Mat3 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]; // identity matrix
+
+// color transformations going by quarter-turns of hue-rotations
+const C_MAT: Mat3 = [
+    [-0.213, -0.715,  0.928],
+    [ 0.143,  0.140, -0.283],
+    [-0.787,  0.715,  0.072],
+]
+
+const SEPIA: Mat3 = [
+  [0.393, 0.769, 0.189],
+  [0.349, 0.686, 0.168],
+  [0.272, 0.534, 0.131],
+];
