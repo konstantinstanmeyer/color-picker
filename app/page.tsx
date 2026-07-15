@@ -174,7 +174,7 @@ function ColorWheel({ value, onChange }: { value: Vec3; onChange: (v: Vec3) => v
           ref={ref}
           width={SIZE}
           height={SIZE}
-          className="cursor-crosshair touch-none rounded-full"
+          className="cursor-crosshair touch-none rounded-full wheel-fade"
           style={{ width: SIZE, height: SIZE }}
           onPointerDown={(e) => {
             dragging.current = true;
@@ -185,7 +185,6 @@ function ColorWheel({ value, onChange }: { value: Vec3; onChange: (v: Vec3) => v
           onPointerUp={() => (dragging.current = false)}
           onPointerCancel={() => (dragging.current = false)}
         />
-        {/* a square reticle, not a bubble */}
         <div
           className="pointer-events-none absolute h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 border border-white outline outline-1 outline-black/60"
           style={{ left: mx, top: my, background: vecToHex(value) }}
@@ -468,7 +467,7 @@ export default function Page() {
   const [targetDraft, setTargetDraft] = useState(vecToHex(INITIAL_TARGET));
   const [base, setBase] = useState<Vec3>([0, 0, 0]);
   const [mode, setMode] = useState<Mode>("flatten");
-  const [tab, setTab] = useState<"wheel" | "image" | "hex">("wheel");
+  const [tab, setTab] = useState<"wheel" | "image" | "hex">("hex");
   const [baseDraft, setBaseDraft] = useState("#000000");
   const [img, setImg] = useState<string | null>(null);
   const [fmtTab, setFmtTab] = useState<"css" | "tailwind" | "jsx">("css");
@@ -657,9 +656,9 @@ export default function Page() {
                     <div className={SEG}>
                       {(
                         [
-                          ["wheel", "Wheel"],
-                          ["image", "Pixel"],
                           ["hex", "Hex"],
+                          ["wheel", "Wheel"],
+                          ["image", "Image"],
                         ] as const
                       ).map(([id, l]) => (
                         <button
