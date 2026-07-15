@@ -27,7 +27,7 @@ const ONE: Vec3 = [1, 1, 1]; // vector of ones for full-color intensity inversio
 const I3: Mat3 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]; // identity matrix
 
 // color transformations going by quarter-turns of hue-rotations
-const C_MAT: Mat3 = [
+const H_MAT: Mat3 = [
     [-0.213, -0.715,  0.928],
     [ 0.143,  0.140, -0.283],
     [-0.787,  0.715,  0.072],
