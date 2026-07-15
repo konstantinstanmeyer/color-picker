@@ -80,4 +80,16 @@ const D: Vec3 = sub(U, scale(ONE, ELL)); // the chroma left over, our main tint;
 
 const E: Vec3 = mulMat(C_MAT, D); // pushes the chroma across the rgb plane
 
-console.log(dot(LUM, D), dot(LUM, E))
+const EPS_E: number = dot(LUM, E);
+
+// using Cramer's Rule x_i = det(t) / det(A) |||| A with column i replaced by 
+function solve3(c1: Vec3, c2: Vec3, c3: Vec3, t: Vec3): Vec3 {
+    const det = (a: Vec3, b: Vec3, c: Vec3) =>
+        a[0]*(b[1]*c[2]-b[2]*c[1]) - b[0]*(a[1]*c[2]-a[2]*c[1]) + c[0]*(a[1]*b[2]-a[2]*b[1]);
+    const D0 = det(c1, c2, c3);
+    if (Math.abs(D0) < 1e-12) return [0, 0, 0]; // should never hit this edge case, but might as well... like that Ben Franklin saying
+    return [det(t,c2,c3)/D0, det(c1,t,c3)/D0, det(c1,c2,t)/D0];
+}
+
+// console.log(solve3(ONE, D, E, U)); // sanity check
+
