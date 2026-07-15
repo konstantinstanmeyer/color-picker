@@ -5,8 +5,8 @@ const clamp01 = (x:number) => x < 0 ? 0 : x > 1 ? 1 : x;
 
 // standard vector operations
 const dot = (a:Vec3, b: Vec3) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
-const add   = (a: Vec3, b: Vec3): Vec3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
-const sub   = (a: Vec3, b: Vec3): Vec3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const add = (a: Vec3, b: Vec3): Vec3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub = (a: Vec3, b: Vec3): Vec3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
 const scale = (a: Vec3, k: number): Vec3 => [a[0] * k, a[1] * k, a[2] * k];
 const clampVec = (v: Vec3): Vec3 => [clamp01(v[0]), clamp01(v[1]), clamp01(v[2])];
 const maxOf = (v: Vec3) => Math.max(v[0], v[1], v[2]);
@@ -34,9 +34,9 @@ const C_MAT: Mat3 = [
 ]
 
 const SEPIA: Mat3 = [
-  [0.393, 0.769, 0.189],
-  [0.349, 0.686, 0.168],
-  [0.272, 0.534, 0.131],
+    [0.393, 0.769, 0.189],
+    [0.349, 0.686, 0.168],
+    [0.272, 0.534, 0.131],
 ];
 
 // S(s) = (1-s)·L + s·I (interpolation formula for saturation matrix)
@@ -62,13 +62,18 @@ const fSepia      = (v: Vec3): Vec3 => clampVec(mulMat(SEPIA, v));
 const fHueRotate  = (v: Vec3, deg: number): Vec3 => clampVec(mulMat(hueMat(deg), v));
 const fSaturate   = (v: Vec3, s: number): Vec3 => clampVec(mulMat(satMat(s), v));
 
-console.log(console.log(fInvert([0.5, 0.5, 0.5], 0.5)));
-console.log(console.log(fInvert([0.5, 0.5, 0.5], 0)));
-console.log(console.log(fInvert([0.5, 0.5, 0.5], 1)));
-console.log(console.log(fBrightness([0.5, 0.5, 0.5], 0.5)));
-console.log(console.log(fBrightness([0.5, 0.5, 0.5], 1)));
-console.log(console.log(fBrightness([0.5, 0.5, 0.5], 2)));
-console.log(console.log(fSepia([0.5, 0.5, 0.5])));
-console.log(console.log(fSepia([0.5, 0.5, 0.1])));
-console.log(console.log(fHueRotate([0.5, 0.5, 0.5], 90)));
-console.log(console.log(fSaturate([0.5, 0.5, 0.5], 0.5)));
+// reformatting to single function
+function render(base: Vec3, g: number, hue: number, sat: number, bri: number): Vec3 {
+    // flatten to black for higher accuracy
+    let v = fBrightness(base, 0);
+
+    v = fInvert(v, g);
+    v = fSepia(v);
+    v = fHueRotate(v, hue);
+    v = fSaturate(v, sat);
+    v = fBrightness(v, bri);
+
+    return v;
+}
+
+console.log(render([0.5, 0.5, 0.5], 0.5, 90, 1, 1));
