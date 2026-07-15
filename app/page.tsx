@@ -416,13 +416,6 @@ function ImageSampler({
 }
 
 function Claim() {
-  const stats: [string, string][] = [
-    ["worst error", "0.015 / 255"],
-    ["colors verified", "5,216"],
-    ["search iterations", "0"],
-    ["random seeds", "0"],
-  ];
-
   return (
     <div className="border-b border-rule text-ink">
       <div className="flex min-w-0 flex-col gap-3 px-3 py-3 md:flex-row md:items-end md:justify-between md:px-4">
@@ -437,23 +430,10 @@ function Claim() {
           </h2>
           <p className="mt-2 max-w-md text-[11px] leading-snug text-muted">
             Every other tool for this runs a randomized search and hands you a different
-            answer each time you press the button. This one solves a 3×3 linear system.
+            answer each time you press the button. This one solves a 3x3 linear system.
             Same input, same output, every time — and it shows you its own error.
           </p>
         </div>
-
-        <dl className="grid w-full min-w-0 grid-cols-2 gap-2 sm:grid-cols-4 md:w-auto md:shrink-0">
-          {stats.map(([k, v]) => (
-            <div key={k} className="min-w-0 border border-rule px-3 py-2">
-              <dt className="font-cond text-[9px] uppercase tracking-[0.14em] text-faint">
-                {k}
-              </dt>
-              <dd className="mt-0.5 whitespace-nowrap font-mono text-[13px] font-medium">
-                {v}
-              </dd>
-            </div>
-          ))}
-        </dl>
       </div>
     </div>
   );
