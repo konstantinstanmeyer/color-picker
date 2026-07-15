@@ -43,7 +43,7 @@ const SEPIA: Mat3 = [
 const satMat = (s: number): Mat3 =>
     I3.map((row, i) => row.map((iv, j) => (1 - s)*L[i][j] + s*iv)) as Mat3;
 
-// H(θ) = L + cos(θ)·(I - L) + sin(θ)·C (copy-pasting this won't pretend I know it....)
+// H(θ) = L + cos(θ)·(I - L) + sin(θ)·C (copy-pasting these functions—won't pretend I know it....)
 const hueMat = (deg: number): Mat3 => {
     const t = (deg * Math.PI) / 180;
     const cos = Math.cos(t), sin = Math.sin(t);
@@ -51,3 +51,10 @@ const hueMat = (deg: number): Mat3 => {
         row.map((iv, j) => L[i][j] + cos*(iv - L[i][j]) + sin*C_MAT[i][j])
     ) as Mat3;
 };
+
+// primitimves for normalizing values via our clamping function across the vectors
+const fInvert = (v: Vec3, k: number): Vec3 => {
+    return clampVec([k + v[0]*(1-2*k), k + v[1]*(1-2*k), k + v[2]*(1-2*k)]);
+};
+
+console.log(fInvert([0.75, 0.5, 0.5], 0.8));
