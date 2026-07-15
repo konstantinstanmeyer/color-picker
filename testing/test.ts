@@ -27,7 +27,7 @@ const ONE: Vec3 = [1, 1, 1]; // vector of ones for full-color intensity inversio
 const I3: Mat3 = [[1, 0, 0], [0, 1, 0], [0, 0, 1]]; // identity matrix
 
 // color transformations going by quarter-turns of hue-rotations
-const H_MAT: Mat3 = [
+const C_MAT: Mat3 = [
     [-0.213, -0.715,  0.928],
     [ 0.143,  0.140, -0.283],
     [-0.787,  0.715,  0.072],
@@ -38,3 +38,16 @@ const SEPIA: Mat3 = [
   [0.349, 0.686, 0.168],
   [0.272, 0.534, 0.131],
 ];
+
+// S(s) = (1-s)·L + s·I (interpolation formula for saturation matrix)
+const satMat = (s: number): Mat3 =>
+    I3.map((row, i) => row.map((iv, j) => (1 - s)*L[i][j] + s*iv)) as Mat3;
+
+// H(θ) = L + cos(θ)·(I - L) + sin(θ)·C (copy-pasting this won't pretend I know it....)
+const hueMat = (deg: number): Mat3 => {
+    const t = (deg * Math.PI) / 180;
+    const cos = Math.cos(t), sin = Math.sin(t);
+    return I3.map((row, i) =>
+        row.map((iv, j) => L[i][j] + cos*(iv - L[i][j]) + sin*C_MAT[i][j])
+    ) as Mat3;
+};
