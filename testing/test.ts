@@ -1,7 +1,15 @@
 type Vec3 = [number, number, number] // rgb vectors
 type Mat3 = [Vec3, Vec3, Vec3] // 3x3 matrices
 
-const clamp = (x:number) => x < 0 ? 0 : x > 1 ? 1 : x;
+const clamp01 = (x:number) => x < 0 ? 0 : x > 1 ? 1 : x;
+
+// standard vector operations
+const dot = (a:Vec3, b: Vec3) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+const add   = (a: Vec3, b: Vec3): Vec3 => [a[0] + b[0], a[1] + b[1], a[2] + b[2]];
+const sub   = (a: Vec3, b: Vec3): Vec3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+const scale = (a: Vec3, k: number): Vec3 => [a[0] * k, a[1] * k, a[2] * k];
+const clampVec = (v: Vec3): Vec3 => [clamp01(v[0]), clamp01(v[1]), clamp01(v[2])];
+const maxOf = (v: Vec3) => Math.max(v[0], v[1], v[2]);
 
 function mulMatrix(M: Mat3, v: Vec3): Vec3{
     return [
