@@ -1,6 +1,9 @@
 type Vec3 = [number, number, number] // rgb vectors
 type Mat3 = [Vec3, Vec3, Vec3] // 3x3 matrices
 
+// grascale weights for later operations
+const LUM_GRAY: Vec3 = [0.2126, 0.7152, 0.0722];
+
 const clamp01 = (x:number) => x < 0 ? 0 : x > 1 ? 1 : x;
 
 // standard vector operations
@@ -61,19 +64,20 @@ const fBrightness = (v: Vec3, b: number): Vec3 => clampVec(scale(v, b));
 const fSepia      = (v: Vec3): Vec3 => clampVec(mulMat(SEPIA, v));
 const fHueRotate  = (v: Vec3, deg: number): Vec3 => clampVec(mulMat(hueMat(deg), v));
 const fSaturate   = (v: Vec3, s: number): Vec3 => clampVec(mulMat(satMat(s), v));
+// returns a grayscale version of the input vector, clamped to [0,1]
+// ny RGB color can be decomposed into: color = gray + chroma
+const fGrayscale = (v: Vec3): Vec3 => {
+  const g = dot(LUM_GRAY, v);
+  return clampVec([g, g, g]);
+};
 
-// reformatting to single function
-function render(base: Vec3, g: number, hue: number, sat: number, bri: number): Vec3 {
-    // flatten to black for higher accuracy
-    let v = fBrightness(base, 0);
+const U: Vec3 = mulMat(SEPIA, ONE);   // (1.351, 1.203, 0.937)
 
-    v = fInvert(v, g);
-    v = fSepia(v);
-    v = fHueRotate(v, hue);
-    v = fSaturate(v, sat);
-    v = fBrightness(v, bri);
+// every gray comes out of sepia as a scaled version of the same tan color
+// we must split that vector into brightness and color for the next transformations
+const ELL: number = dot(LUM, U); // ~1.2154 brightness of the tan, just a grayscale version of U
+const D: Vec3 = sub(U, scale(ONE, ELL)); // the chroma left over, our main tint; basically pure chroma
 
-    return v;
-}
+const E: Vec3 = mulMat(C_MAT, D); // pushes the chroma across the rgb plane
 
-console.log(render([0.5, 0.5, 0.5], 0.5, 90, 1, 1));
+console.log(dot(LUM, D), dot(LUM, E))
