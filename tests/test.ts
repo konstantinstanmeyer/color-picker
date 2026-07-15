@@ -1,4 +1,4 @@
-type Vec3 = [number, number, number] // rgb vectors
+export type Vec3 = [number, number, number] // rgb vectors
 type Mat3 = [Vec3, Vec3, Vec3] // 3x3 matrices
 
 export type Solution = {
@@ -183,4 +183,3 @@ for (const c of cases) {
     if (err > worst) { worst = err; worstCase = { c, base }; }
   }
 }
-console.log("worst channel error /255:", worst, worstCase);
