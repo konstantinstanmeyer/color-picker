@@ -41,3 +41,34 @@
   --warn: #d3a45f;
   --bad: #e07a70;
 }
+
+@theme inline {
+  --color-chrome: var(--chrome);
+  --color-panel: var(--panel);
+  --color-field: var(--field);
+  --color-header: var(--header);
+  --color-rule: var(--rule);
+  --color-rule-soft: var(--rule-soft);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-onaccent: var(--onaccent);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-bad: var(--bad);
+
+  --font-sans: var(--font-plex-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-cond: var(--font-plex-cond), var(--font-plex-sans), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --radius-xs: 0px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
