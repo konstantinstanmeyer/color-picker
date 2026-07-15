@@ -11,7 +11,7 @@ const scale = (a: Vec3, k: number): Vec3 => [a[0] * k, a[1] * k, a[2] * k];
 const clampVec = (v: Vec3): Vec3 => [clamp01(v[0]), clamp01(v[1]), clamp01(v[2])];
 const maxOf = (v: Vec3) => Math.max(v[0], v[1], v[2]);
 
-function mulMatrix(M: Mat3, v: Vec3): Vec3{
+function mulMat(M: Mat3, v: Vec3): Vec3{
     return [
         M[0][0] * v[0] + M[0][1] * v[1] + M[0][2] * v[2],
         M[1][0] * v[0] + M[1][1] * v[1] + M[1][2] * v[2],
@@ -57,4 +57,18 @@ const fInvert = (v: Vec3, k: number): Vec3 => {
     return clampVec([k + v[0]*(1-2*k), k + v[1]*(1-2*k), k + v[2]*(1-2*k)]);
 };
 
-console.log(fInvert([0.75, 0.5, 0.5], 0.8));
+const fBrightness = (v: Vec3, b: number): Vec3 => clampVec(scale(v, b));
+const fSepia      = (v: Vec3): Vec3 => clampVec(mulMat(SEPIA, v));
+const fHueRotate  = (v: Vec3, deg: number): Vec3 => clampVec(mulMat(hueMat(deg), v));
+const fSaturate   = (v: Vec3, s: number): Vec3 => clampVec(mulMat(satMat(s), v));
+
+console.log(console.log(fInvert([0.5, 0.5, 0.5], 0.5)));
+console.log(console.log(fInvert([0.5, 0.5, 0.5], 0)));
+console.log(console.log(fInvert([0.5, 0.5, 0.5], 1)));
+console.log(console.log(fBrightness([0.5, 0.5, 0.5], 0.5)));
+console.log(console.log(fBrightness([0.5, 0.5, 0.5], 1)));
+console.log(console.log(fBrightness([0.5, 0.5, 0.5], 2)));
+console.log(console.log(fSepia([0.5, 0.5, 0.5])));
+console.log(console.log(fSepia([0.5, 0.5, 0.1])));
+console.log(console.log(fHueRotate([0.5, 0.5, 0.5], 90)));
+console.log(console.log(fSaturate([0.5, 0.5, 0.5], 0.5)));
