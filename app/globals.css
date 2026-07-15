@@ -1,1 +1,43 @@
 @import "tailwindcss";
+
+:root {
+  --chrome: #d9dfe3; /* the desk the window sits on */
+  --panel: #ffffff; /* the window itself */
+  --field: #fbfcfd; /* anything you can type into or read a value out of */
+  --header: #eef1f3; /* strips that name a region */
+
+  --rule: #b4c0c8; /* structural lines: they divide */
+  --rule-soft: #e0e5e9; /* rows within a region: they group */
+
+  --ink: #16202a;
+  --muted: #5c6b77;
+  --faint: #8d9aa4;
+
+  --accent: #14527a;
+  --onaccent: #ffffff;
+
+  --ok: #1c6b4a;
+  --warn: #8a5a12;
+  --bad: #9a2c22;
+}
+
+.dark {
+  --chrome: #0c1013;
+  --panel: #151b20;
+  --field: #10161a;
+  --header: #1b232a;
+
+  --rule: #313d46;
+  --rule-soft: #232c33;
+
+  --ink: #dbe3e9;
+  --muted: #8d9ba6;
+  --faint: #63717c;
+
+  --accent: #4f9fcf;
+  --onaccent: #07101a;
+
+  --ok: #5fbb8e;
+  --warn: #d3a45f;
+  --bad: #e07a70;
+}
