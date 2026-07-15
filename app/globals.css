@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* pallette */
 :root {
   --chrome: #d9dfe3; /* the desk the window sits on */
   --panel: #ffffff; /* the window itself */
@@ -42,6 +45,7 @@
   --bad: #e07a70;
 }
 
+/* mapping themes to tailwind */
 @theme inline {
   --color-chrome: var(--chrome);
   --color-panel: var(--panel);
@@ -71,4 +75,93 @@
 
 html {
   -webkit-font-smoothing: antialiased;
+}
+
+.font-mono {
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+.slider {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 10px;
+  border: 1px solid var(--rule);
+  cursor: pointer;
+}
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 8px;
+  height: 16px;
+  margin-top: -4px;
+  background: var(--panel);
+  border: 1px solid var(--ink);
+  cursor: ew-resize;
+}
+.slider::-moz-range-thumb {
+  width: 8px;
+  height: 16px;
+  border-radius: 0;
+  background: var(--panel);
+  border: 1px solid var(--ink);
+  cursor: ew-resize;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+  border: none;
+}
+
+legend {
+  margin-left: -2px;
+}
+
+fieldset {
+  min-inline-size: 0;
+}
+
+@media (max-width: 640px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+    min-height: 36px;
+  }
+  button,
+  label[for],
+  input[type="color"] {
+    min-height: 36px;
+  }
+  .slider {
+    min-height: 0; /* exempt: it's a track, not a target */
+    height: 14px;
+  }
+  .slider::-webkit-slider-thumb {
+    width: 14px;
+    height: 22px;
+    margin-top: -5px;
+  }
+  .slider::-moz-range-thumb {
+    width: 14px;
+    height: 22px;
+  }
+}
+
+/* Stop iOS inflating type in landscape */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--onaccent);
+}
+
+/* Keyboard focus has to remain obvious even though nothing here glows */
+:focus-visible {
+  outline: 1px solid var(--accent);
+  outline-offset: 1px;
 }
